@@ -10,4 +10,3 @@ sudo apt-get install azure-cli -y
 sudo az aks install-cli
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 az login --identity
-sudo az aks get-credentials -g rg-cnsp-dev-weu-mkrou -n aks-cnsp-dev-weu
