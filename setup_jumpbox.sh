@@ -9,4 +9,10 @@ sudo apt-get update -y
 sudo apt-get install azure-cli -y
 sudo az aks install-cli
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-az login --identity
+mkdir actions-runner
+cd actions-runner
+curl -o actions-runner-linux-x64-2.307.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.307.1/actions-runner-linux-x64-2.307.1.tar.gz
+tar xzf ./actions-runner-linux-x64-2.307.1.tar.gz
+./config.sh --url https://github.com/MaryKroustali/bicep --token AQ6ZEQASKWNXABOFMSJNNA3EY7AYY
+sudo ./svc.sh install
+sudo ./svc.sh start
