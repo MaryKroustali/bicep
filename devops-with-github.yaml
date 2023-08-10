@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: devops-with-github
+  name: devops-with-github
+  namespace: devops-with-github
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-with-github
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: devops-with-github
+    spec:
+      containers:
+      - image: acrcnspdevweuqrld7.azurecr.io/devops-with-github-example:7461253586f68e99265379671e
+        name: devops-with-github-example
+        resources: {}
+status: {}

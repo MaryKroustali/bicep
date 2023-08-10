@@ -1,0 +1,5 @@
+secretGenerator:
+- name: mysql-credentials
+  literals:
+  - username=mysqladmin
+  - password=ABC123!@#
