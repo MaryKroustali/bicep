@@ -19,7 +19,7 @@ spec:
         app: devops-with-github
     spec:
       containers:
-      - image: crcnspdevweu.azurecr.io/devops-with-github-example:7461253586f68e99265379671eb73cf279aa6698
+      - image: acrcnspdevweuqrld7.azurecr.io/devops-with-github-example:7461253586f68e99265379671eb73cf279aa6698
         name: devops-with-github-example
         resources: {}
 status: {}
