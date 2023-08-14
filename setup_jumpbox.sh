@@ -9,10 +9,13 @@ sudo apt-get update -y
 sudo apt-get install azure-cli -y
 sudo az aks install-cli
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+sudo apt  install jq
 # mkdir actions-runner
 # cd actions-runner
 # curl -o actions-runner-linux-x64-2.307.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.307.1/actions-runner-linux-x64-2.307.1.tar.gz
 # tar xzf ./actions-runner-linux-x64-2.307.1.tar.gz
-# ./config.sh --url https://github.com/MaryKroustali/bicep --token AQ6ZEQASKWNXABOFMSJNNA3EY7AYY
+# token=`curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/MaryKroustali/bicep/actions/runners/registration-token`
+# token=`echo $token | jq -r '.token'`
+# echo | ./config.sh --url https://github.com/MaryKroustali/bicep --token $token
 # sudo ./svc.sh install
 # sudo ./svc.sh start
