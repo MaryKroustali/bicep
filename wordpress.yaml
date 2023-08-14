@@ -31,10 +31,10 @@ spec:
               name: mysql-credentials
               key: username
         - name: WORDPRESS_DB_PASSWORD
-            valueFrom: 
-              secretKeyRef:
-                name: mysql-credentials
-                key: password
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-credentials
+              key: password
         - name: WORDPRESS_DB_NAME
           value: wordpress
         - name: WORDPRESS_CONFIG_EXTRA
