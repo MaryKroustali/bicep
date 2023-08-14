@@ -3,3 +3,5 @@ secretGenerator:
   literals:
   - username=mysqladmin
   - password=ABC123!@#
+generatorOptions:
+  disableNameSuffixHash: true
