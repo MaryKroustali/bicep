@@ -1,0 +1,96 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  azure-login:
+    # The type of runner that the job will run on
+    runs-on: vm-cnsp-dev-weu
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: azure login 
+        run: az login --identity
+
+      - name: connect to cluster
+        run: az aks get-credentials --resource-group rg-cnsp-dev-weu --name aks-cnsp-dev-weu
+        
+  import-images-to-acr:
+
+    runs-on: vm-cnsp-dev-weu
+
+    steps:
+      - uses: actions/checkout@v3
+    
+      - name: login to acr
+        run: az acr login -n acrcnspdevweuqrld7
+    
+      - name: import images to acr
+        run: |
+            az acr import --name acrcnspdevweuqrld7 --source docker.io/library/wordpress:latest --image wordpress:latest
+            az acr import --name acrcnspdevweuqrld7 --source ghcr.io/christosgalano/devops-with-github-example:7461253586f68e99265379671eb73cf279aa6698 --image devops-with-github-example:7461253586f68e99265379671e
+
+      - name: show list of acr images
+        run: az acr repository list -n acrcnspdevweuqrld7
+
+  deploy-apps:
+
+    runs-on: vm-cnsp-dev-weu
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: namespaces for apps
+        run: |
+          kubectl create ns wordpress
+          kubectl create ns devops-with-github
+        
+      - name: deploy wordpress app & service
+        run: |
+          kubectl apply -f kubernetes/apps/wordpress *.yaml
+          kubectl apply -k kubernetes/apps/wordpress -n wordpress
+    
+      - name: deploy devops-with-github app & service
+        run: |
+            kubectl apply -f kubernetes/apps/devops-with-github *.yaml
+            
+      - name: show list of deployments and services
+        run: |
+            kubectl get all -n wordpress
+            kubectl get all -n devops-with-github
+
+  internal-ingress-controller:
+
+    runs-on: vm-cnsp-dev-weu
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: namespace for internal ingress nginx
+        run: kubectl create ns ingress-controller
+        
+      - name: deploy ingress-controller
+        run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm repo update
+          helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-controller --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz
+          kubectl annotate -n ingress-controller  service ingress-nginx-controller service.beta.kubernetes.io/azure-load-balancer-internal="true"
+          kubectl annotate -n ingress-controller  service ingress-nginx-controller service.beta.kubernetes.io/azure-load-balancer-internal-subnet=snet-aks-cnsp-dev-weu
+
+      - name: deploy ingresses
+        run: |
+           kubectl apply -f ingress-wordpress.yaml 
+           kubectl apply -f ingress-devops-with-github.yaml
+            
+      - name: show list of deployments and services
+        run: |
+            kubectl get all -n wordpress
+            kubectl get all -n devops-with-github
