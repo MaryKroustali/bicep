@@ -1,4 +1,4 @@
-#!/bin/bash
+sudo curl -o azdoagent.tar.gz#!/bin/bash
 # Initialize parameters specified from command line
 while getopts ":u:p:t:l:" arg; do
     case "${arg}" in
@@ -25,8 +25,8 @@ sudo apt-get install -y unzip
 sudo apt-get install dialog apt-utils -y
 echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
 sudo apt-get install -y -q
-wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
-tar -xzf jdk-17_linux-x64_bin.tar.gz
+sudo curl -o jdk-17.tar.gz https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+tar -xzf jdk-17.tar.gz
 sudo mkdir -p /usr/lib/jvm
 sudo mv jdk-17.0.10 /usr/lib/jvm/
 
