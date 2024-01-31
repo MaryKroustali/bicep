@@ -46,23 +46,19 @@ sudo apt-get update
 sudo apt-get install azure-cli -y
 
 # download azdo agent
-echo "Install Azure DevOps agent ..." >> $log
 sudo mkdir myagent && cd myagent
 sudo curl https://vstsagentpackage.azureedge.net/agent/3.232.3/vsts-agent-linux-x64-3.232.3.tar.gz
 sudo tar xzvf vsts-agent-linux-x64-3.232.3.tar.gz
 sudo rm -f vsts-agent-linux-x64-3.232.3.tar.gz
 
 # configure as azdouser
-echo "Configure Azure DevOps agent ..." >> $log
 sudo chown -R $agentuser myagent
 sudo chmod -R 755 myagent
 runuser -l $agentuser -c "myagent/config.sh --unattended --url $azdourl --auth pat --token $pat --pool $pool --acceptTeeEula"
 
 # install and start the service
-echo "Configure Azure DevOps agent to run as a service ..." >> $log
 sudo myagent/svc.sh install
 sudo myagent/svc.sh start
 
 # give permissions to run pipeline
-echo "Configure Azure DevOps agent to run Docker scripts ..." >> $log
 sudo chown -R $agentuser /var/run/docker
