@@ -18,7 +18,7 @@ while getopts ":u:p:t:l:" arg; do
 done
 
 # download unzip
-sudo apt-get update -y 
+sudo apt-get update
 sudo apt-get install -y unzip
 
 # download java 17
@@ -39,6 +39,7 @@ AZ_REPO=$(lsb_release -cs)
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 
 # dowmload az cli
+sudo apt-get update
 sudo apt-get install azure-cli -y
 
 # download azdo agent
