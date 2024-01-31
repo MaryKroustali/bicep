@@ -30,10 +30,6 @@ tar -xzf jdk-17.tar.gz
 sudo mkdir -p /usr/lib/jvm
 sudo mv jdk-17.0.10 /usr/lib/jvm/
 
-# set JAVA environment
-export JAVA_HOME=/usr/lib/jvm/jdk-17.0.10
-export PATH=$JAVA_HOME/bin:$PATH
-
 # download docker
 sudo apt-get install -y apt-transport-https ca-certificates curl lsb-release gnupg-agent software-properties-common mysql-client
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo chmod +x get-docker.sh && ./get-docker.sh
