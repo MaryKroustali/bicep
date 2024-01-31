@@ -22,7 +22,9 @@ sudo apt-get update
 sudo apt-get install -y unzip
 
 # download java 17
-apt-get install dialog apt-utils -y
+sudo apt-get install dialog apt-utils -y
+echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+sudo apt-get install -y -q
 wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
 tar -xzf jdk-17_linux-x64_bin.tar.gz
 sudo mkdir -p /usr/lib/jvm
