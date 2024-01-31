@@ -46,8 +46,8 @@ sudo apt-get update
 sudo apt-get install azure-cli -y
 
 # download azdo agent
-sudo mkdir myagent && cd myagent
-sudo curl https://vstsagentpackage.azureedge.net/agent/3.232.3/vsts-agent-linux-x64-3.232.3.tar.gz
+sudo mkdir -p myagent && cd myagent
+sudo curl -o vsts-agent-linux-x64-3.232.3.tar.gz https://vstsagentpackage.azureedge.net/agent/3.232.3/vsts-agent-linux-x64-3.232.3.tar.gz
 sudo tar xzvf vsts-agent-linux-x64-3.232.3.tar.gz
 sudo rm -f vsts-agent-linux-x64-3.232.3.tar.gz
 
